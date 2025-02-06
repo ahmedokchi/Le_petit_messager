@@ -62,6 +62,12 @@ class Post
     #[ORM\ManyToMany(targetEntity: Favorite::class, mappedBy: 'post_id')]
     private Collection $favorites;
 
+    /**
+     * @var Collection<int, Notification>
+     */
+    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'post_id')]
+    private Collection $notifications;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
@@ -69,6 +75,7 @@ class Post
         $this->comments = new ArrayCollection();
         $this->tweetReports = new ArrayCollection();
         $this->favorites = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
 
@@ -270,6 +277,36 @@ class Post
     {
         if ($this->favorites->removeElement($favorite)) {
             $favorite->removePostId($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): static
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setPostId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): static
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getPostId() === $this) {
+                $notification->setPostId(null);
+            }
         }
 
         return $this;

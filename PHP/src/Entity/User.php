@@ -99,9 +99,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $tweetReports;
 
     /**
-     * @var Collection<int, AccountReports>
+     * @var Collection<int, AccountReport>
      */
-    #[ORM\ManyToMany(targetEntity: AccountReports::class, mappedBy: 'user_signaled_id')]
+    #[ORM\ManyToMany(targetEntity: AccountReport::class, mappedBy: 'user_signaled_id')]
     private Collection $accountReports;
 
     /**
@@ -494,14 +494,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, AccountReports>
+     * @return Collection<int, AccountReport>
      */
     public function getAccountReports(): Collection
     {
         return $this->accountReports;
     }
 
-    public function addAccountReport(AccountReports $accountReport): static
+    public function addAccountReport(AccountReport $accountReport): static
     {
         if (!$this->accountReports->contains($accountReport)) {
             $this->accountReports->add($accountReport);
@@ -511,7 +511,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeAccountReport(AccountReports $accountReport): static
+    public function removeAccountReport(AccountReport $accountReport): static
     {
         if ($this->accountReports->removeElement($accountReport)) {
             $accountReport->removeUserSignaledId($this);

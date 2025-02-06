@@ -17,7 +17,7 @@ class AccountReportRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return AccountReports[] Returns an array of AccountReports objects
+    //     * @return AccountReports[] Returns an array of AccountReport objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class AccountReportRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?AccountReports
+    //    public function findOneBySomeField($value): ?AccountReport
     //    {
     //        return $this->createQueryBuilder('a')
     //            ->andWhere('a.exampleField = :val')
