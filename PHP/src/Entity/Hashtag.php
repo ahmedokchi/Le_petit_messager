@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\HashtagsRepository;
+use App\Repository\HashtagRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: HashtagsRepository::class)]
-class Hashtags
+#[ORM\Entity(repositoryClass: HashtagRepository::class)]
+class Hashtag
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

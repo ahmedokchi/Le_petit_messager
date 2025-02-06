@@ -2,18 +2,18 @@
 
 namespace App\Repository;
 
-use App\Entity\Hashtags;
+use App\Entity\Hashtag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Hashtags>
+ * @extends ServiceEntityRepository<Hashtag>
  */
-class HashtagsRepository extends ServiceEntityRepository
+class HashtagRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Hashtags::class);
+        parent::__construct($registry, Hashtag::class);
     }
 
     //    /**
