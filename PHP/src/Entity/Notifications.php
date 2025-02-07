@@ -2,26 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\NotificationRepository;
-use Doctrine\DBAL\Types\Types;
+use App\Repository\NotificationsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: NotificationRepository::class)]
-class Notification
+#[ORM\Entity(repositoryClass: NotificationsRepository::class)]
+class Notifications
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'notifications')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_id = null;
+    private ?Users $fk_user = null;
 
     #[ORM\ManyToOne(inversedBy: 'notifications')]
-    private ?Post $post_id = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Posts $fk_post = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(length: 255)]
     private ?string $content = null;
 
     #[ORM\Column]
@@ -35,26 +35,26 @@ class Notification
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getFkUser(): ?Users
     {
-        return $this->user_id;
+        return $this->fk_user;
     }
 
-    public function setUserId(?User $user_id): static
+    public function setFkUser(?Users $fk_user): static
     {
-        $this->user_id = $user_id;
+        $this->fk_user = $fk_user;
 
         return $this;
     }
 
-    public function getPostId(): ?Post
+    public function getFkPost(): ?Posts
     {
-        return $this->post_id;
+        return $this->fk_post;
     }
 
-    public function setPostId(?Post $post_id): static
+    public function setFkPost(?Posts $fk_post): static
     {
-        $this->post_id = $post_id;
+        $this->fk_post = $fk_post;
 
         return $this;
     }

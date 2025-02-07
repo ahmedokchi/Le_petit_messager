@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\RepostRepository;
+use App\Repository\RepostsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RepostRepository::class)]
-class Repost
+#[ORM\Entity(repositoryClass: RepostsRepository::class)]
+class Reposts
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,11 +15,11 @@ class Repost
 
     #[ORM\ManyToOne(inversedBy: 'reposts')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_id = null;
+    private ?Users $fk_user = null;
 
     #[ORM\ManyToOne(inversedBy: 'reposts')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Post $post_id = null;
+    private ?Posts $fk_post = null;
 
     #[ORM\Column(length: 1000, nullable: true)]
     private ?string $content_text = null;
@@ -32,26 +32,26 @@ class Repost
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getFkUser(): ?Users
     {
-        return $this->user_id;
+        return $this->fk_user;
     }
 
-    public function setUserId(?User $user_id): static
+    public function setFkUser(?Users $fk_user): static
     {
-        $this->user_id = $user_id;
+        $this->fk_user = $fk_user;
 
         return $this;
     }
 
-    public function getPostId(): ?Post
+    public function getFkPost(): ?Posts
     {
-        return $this->post_id;
+        return $this->fk_post;
     }
 
-    public function setPostId(?Post $post_id): static
+    public function setFkPost(?Posts $fk_post): static
     {
-        $this->post_id = $post_id;
+        $this->fk_post = $fk_post;
 
         return $this;
     }

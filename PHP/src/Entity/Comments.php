@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\CommentsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CommentRepository::class)]
-class Comment
+#[ORM\Entity(repositoryClass: CommentsRepository::class)]
+class Comments
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,15 +16,12 @@ class Comment
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_id = null;
+    private ?Users $fk_user = null;
 
-    /**
-     * @var Collection<int, Post>
-     */
-    #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'comments')]
-    private Collection $post_id;
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?Posts $fk_post = null;
 
-    #[ORM\Column(length: 280)]
+    #[ORM\Column(length: 280, nullable: true)]
     private ?string $content_text = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -35,48 +30,31 @@ class Comment
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    public function __construct()
-    {
-        $this->post_id = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getFkUser(): ?Users
     {
-        return $this->user_id;
+        return $this->fk_user;
     }
 
-    public function setUserId(?User $user_id): static
+    public function setFkUser(?Users $fk_user): static
     {
-        $this->user_id = $user_id;
+        $this->fk_user = $fk_user;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Post>
-     */
-    public function getPostId(): Collection
+    public function getFkPost(): ?Posts
     {
-        return $this->post_id;
+        return $this->fk_post;
     }
 
-    public function addPostId(Post $postId): static
+    public function setFkPost(?Posts $fk_post): static
     {
-        if (!$this->post_id->contains($postId)) {
-            $this->post_id->add($postId);
-        }
-
-        return $this;
-    }
-
-    public function removePostId(Post $postId): static
-    {
-        $this->post_id->removeElement($postId);
+        $this->fk_post = $fk_post;
 
         return $this;
     }
@@ -86,7 +64,7 @@ class Comment
         return $this->content_text;
     }
 
-    public function setContentText(string $content_text): static
+    public function setContentText(?string $content_text): static
     {
         $this->content_text = $content_text;
 
